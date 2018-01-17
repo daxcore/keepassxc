@@ -78,19 +78,22 @@ AboutDialog::AboutDialog(QWidget* parent)
 #endif
 
     QString extensions;
-#ifdef WITH_XC_AUTOTYPE
+#if defined(WITH_XC_AUTOTYPE)
     extensions += "\n- Auto-Type";
 #endif
-#ifdef WITH_XC_BROWSER
+#if defined(WITH_XC_NETWORKING)
+    extensions += "\n- Network Access";
+#endif
+#if defined(WITH_XC_BROWSER)
     extensions += "\n- Browser Integration";
 #endif
-#ifdef WITH_XC_HTTP
+#if defined(WITH_XC_HTTP)
     extensions += "\n- Legacy Browser Integration (KeePassHTTP)";
 #endif
-#ifdef WITH_XC_SSHAGENT
+#if defined(WITH_XC_SSHAGENT)
     extensions += "\n- SSH Agent";
 #endif
-#ifdef WITH_XC_YUBIKEY
+#if defined(WITH_XC_YUBIKEY)
     extensions += "\n- YubiKey";
 #endif
 

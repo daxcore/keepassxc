@@ -115,7 +115,7 @@ void BrowserOptionDialog::saveSettings()
 
 void BrowserOptionDialog::showProxyLocationFileDialog()
 {
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN)
     QString fileTypeFilter(tr("Executable Files (*.exe);;All Files (*.*)"));
 #else
     QString fileTypeFilter(tr("Executable Files (*.*)"));
