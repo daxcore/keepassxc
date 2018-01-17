@@ -115,13 +115,19 @@ void BrowserOptionDialog::saveSettings()
 
 void BrowserOptionDialog::showProxyLocationFileDialog()
 {
+    QFileDialog fileDialog(this, tr("Select custom proxy location"),
+            QFileInfo(QCoreApplication::applicationDirPath()).filePath());
+    fileDialog.setFileMode(QFileDialog::ExistingFile);
+    fileDialog.setLabelText(QFileDialog::Accept, tr("Select"));
 #if defined(Q_OS_WIN)
-    QString fileTypeFilter(tr("Executable Files (*.exe);;All Files (*.*)"));
+    fileDialog.setNameFilter(tr("Executable Files (*.exe);;All Files (*.*)"));
 #else
-    QString fileTypeFilter(tr("Executable Files (*.*)"));
+    fileDialog.setNameFilter(tr("Executable Files (*)"));
 #endif
-    auto proxyLocation = QFileDialog::getOpenFileName(this, tr("Select custom proxy location"),
-                                                      QFileInfo(QCoreApplication::applicationDirPath()).filePath(),
-                                                      fileTypeFilter);
-    m_ui->customProxyLocation->setText(proxyLocation);
+    if (fileDialog.exec() && !fileDialog.selectedFiles().isEmpty()) {
+        m_ui->customProxyLocation->setText(fileDialog.selectedFiles()[0]);
+    }
+
+    // on macOS the focus is lost after closing the native dialog
+    activateWindow();
 }
